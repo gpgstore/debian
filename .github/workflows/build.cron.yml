@@ -7,13 +7,15 @@ on:
 env:
   domain: "${{ github.server_url }}"
   repo: "${{ github.repository }}"
-  gpg_url: "https://haproxy.debian.net/bernat.debian.org.gpg"
-  gpg_name: "apt.debian.haproxy.gpg"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: "Build"
+    env:
+      gpg_url: "https://haproxy.debian.net/bernat.debian.org.gpg"
+      gpg_name: "apt.debian.haproxy.gpg"
+      gpg_cmd: "dearmor"
     steps:
       - uses: ghastore/gpgstore-gpg-build@main
         with:
