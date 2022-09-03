@@ -1,0 +1,24 @@
+name: "GPG (Cron)"
+
+on:
+  - push
+
+env:
+  domain: "${{ github.server_url }}"
+  repo: "${{ github.repository }}"
+  gpg_url: "https://haproxy.debian.net/bernat.debian.org.gpg"
+  gpg_name: "apt.debian.haproxy.gpg"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: "Build"
+    steps:
+      - uses: ghastore/gpgstore-gpg-build@main
+        with:
+          git_repo: "${{ env.domain }}/${{ env.repo }}.git"
+          git_user: "${{ secrets.BOT_GITHUB_NAME }}"
+          git_email: "${{ secrets.BOT_GITHUB_EMAIL }}"
+          git_token: "${{ secrets.BOT_GITHUB_TOKEN }}"
+          gpg_url: "${{ env.gpg_url }}"
+          gpg_name: "${{ env.gpg_name }}"
